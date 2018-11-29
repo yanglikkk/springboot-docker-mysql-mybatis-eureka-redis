@@ -1,0 +1,35 @@
+server:
+  port: 7900
+spring:
+  datasource:
+    url: jdbc:mysql://mysql:3306/test?serverTimezone=GMT%2B8&&useSSL=false&&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+  redis:
+    host: redis
+    port: 6379
+  application:
+    name: microservice-provider-user
+logging:
+  level:
+    com:
+      kfit:
+        spring_boot_mybatis: DEBUG
+    root: INFO
+    org.hibernate: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.hibernate.type.descriptor.sql.BasicExtractor: TRACE
+    com.itmuch: DEBUG
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+    serviceUrl:
+      defaultZone: http://user:password123@eureka:8761/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
+    metadata-map:
+      zone: ABC      # eureka可以理解的元数据
+      lilizhou: BBC  # 不会影响客户端行为
+    lease-renewal-interval-in-seconds: 5
